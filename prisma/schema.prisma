@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  readingTime ReadingTime?
+  slug        String       @unique
+  path        String
+  content     String
+  date        DateTime
+  tags        String[]
+  summary     String
+  images      String[]
+  authors     String[]
+  publishedAt DateTime
+}
+
+type ReadingTime {
+  minutes Int
+}
+
+model Snippet {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  heading String
+  title   String
+  path    String   @unique
+  date    DateTime
+  icon    String
+  draft   Boolean
+  summary String
+  tags    String[]
+}
+
+enum StatsType {
+  blog
+  snippet
+}
+
+model Stats {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  type      StatsType @default(blog)
+  slug      String
+  views     Int       @default(0)
+  loves     Int       @default(0)
+  applauses Int       @default(0)
+  ideas     Int       @default(0)
+  bullseye  Int       @default(0)
+
+  @@unique([type, slug])
+  @@map("stats")
+}
