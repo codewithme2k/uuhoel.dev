@@ -3,35 +3,42 @@ import "@/css/twemoji.css";
 
 import clsx from "clsx";
 import type { Metadata } from "next";
-import { JetBrains_Mono, Nunito, Playpen_Sans } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import { Header } from "@/components/header";
-import { KBarSearchProvider } from "@/components/search/kbar-provider";
+
 import { TiltedGridBackground } from "@/components/ui/tilted-grid-background";
 import { SITE_METADATA } from "@/data/site-metadata";
 import { ThemeProviders } from "@/components/theme-providers";
 import { Footer } from "@/components/footer";
+import { KBarWrapper } from "@/components/search/kbar-wrapper";
 
-const FONT_PLAYPEN_SANS = Playpen_Sans({
+// const FONT_PLAYPEN_SANS = Playpen_Sans({
+//   subsets: ["latin"],
+//   display: "swap",
+//   weight: ["800"],
+//   variable: "--font-playpen-sans",
+// });
+
+// const FONT_NUNITO = Nunito({
+//   subsets: ["latin"],
+//   display: "swap",
+//   style: ["normal", "italic"],
+//   weight: ["400", "500", "600", "700", "800"],
+//   variable: "--font-nunito",
+// });
+
+// const FONT_JETBRAINS_MONO = JetBrains_Mono({
+//   weight: ["400", "500", "600"],
+//   subsets: ["latin"],
+//   style: ["normal", "italic"],
+//   display: "swap",
+//   variable: "--font-jetbrains-mono",
+// });
+const Iter = Quicksand({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
-  weight: ["800"],
   variable: "--font-playpen-sans",
-});
-
-const FONT_NUNITO = Nunito({
-  subsets: ["latin"],
-  display: "swap",
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-nunito",
-});
-
-const FONT_JETBRAINS_MONO = JetBrains_Mono({
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-jetbrains-mono",
 });
 
 export const metadata: Metadata = {
@@ -86,9 +93,10 @@ export default function RootLayout({
       lang={SITE_METADATA.language}
       className={clsx(
         "w-full overflow-x-hidden scroll-smooth",
-        FONT_NUNITO.variable,
-        FONT_JETBRAINS_MONO.variable,
-        FONT_PLAYPEN_SANS.variable
+        // FONT_NUNITO.variable,
+        // FONT_JETBRAINS_MONO.variable,
+        // FONT_PLAYPEN_SANS.variable
+        Iter.variable
       )}
       suppressHydrationWarning
     >
@@ -145,13 +153,10 @@ export default function RootLayout({
       >
         <TiltedGridBackground className="inset-x-0 top-0 z-[-1] h-[50vh]" />
         <ThemeProviders>
-          {/* <UmamiAnalytics
-            websiteId={SITE_METADATA.analytics.umamiAnalytics.websiteId}
-          /> */}
-          <KBarSearchProvider configs={SITE_METADATA.search.kbarConfigs}>
+          <KBarWrapper>
             <Header />
             <main className="mb-auto grow">{children}</main>
-          </KBarSearchProvider>
+          </KBarWrapper>
           <Footer />
         </ThemeProviders>
       </body>

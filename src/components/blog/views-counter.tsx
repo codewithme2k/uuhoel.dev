@@ -1,19 +1,19 @@
 "use client";
 
+import { StatsType } from "@/generated/prisma";
 import { useEffect } from "react";
 
 import {
   useBlogStats,
   useUpdateBlogStats,
 } from "@/shared/hooks/use-blog-stats";
-import { Stats } from "@/generated/prisma";
 
 export function ViewsCounter({
   type,
   slug,
   className,
 }: {
-  type: Stats;
+  type: StatsType;
   slug: string;
   className?: string;
 }) {

@@ -5,9 +5,9 @@ import type { Action } from "kbar";
 import { KBarProvider } from "kbar";
 import { useRouter } from "next/navigation.js";
 import { useEffect, useState, type ReactNode } from "react";
-import type { CoreContent, MDXDocument } from "@/shared/types/data";
-import { formatDate } from "@/shared/utils/misc";
+
 import { KBarModal } from "./kbar-modal";
+import { Blog } from "@/generated/prisma";
 
 export interface KBarSearchProps {
   searchDocumentsPath: string | false;
@@ -34,7 +34,7 @@ export function KBarSearchProvider({
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    function mapPosts(posts: CoreContent<MDXDocument>[]) {
+    function mapPosts(posts: Blog[]) {
       const actions: Action[] = [];
       for (const post of posts) {
         actions.push({
@@ -42,7 +42,7 @@ export function KBarSearchProvider({
           name: post.title,
           keywords: post?.summary || "",
           section: "Content",
-          subtitle: formatDate(post.date),
+          subtitle: post.date.toString(),
           perform: () => router.push("/" + post.path),
         });
       }

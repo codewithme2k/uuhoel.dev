@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { formatDate, getTimeAgo } from "@/shared/utils/misc";
 import { ViewsCounter } from "./views-counter";
 
@@ -20,11 +21,14 @@ export function BlogMeta({
     <dl>
       <dt className="sr-only">Published on</dt>
       <dd className="flex flex-wrap items-center gap-2 text-sm font-medium leading-6 text-gray-500 dark:text-gray-400 md:text-base">
-        <time dateTime={date} className="flex items-center justify-center">
-          <span>{formatDate(date)}</span>
+        <time
+          dateTime={date.toString()}
+          className="flex items-center justify-center"
+        >
+          <span>{formatDate(date.toString())}</span>
           {lastmod && (
             <time
-              dateTime={date}
+              dateTime={date.toString()}
               className="ml-1.5 hidden items-center justify-center md:ml-2 md:flex"
             >
               (<span>updated</span>

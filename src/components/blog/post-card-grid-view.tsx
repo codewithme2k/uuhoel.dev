@@ -5,12 +5,10 @@ import { GrowingUnderline } from "@/components/ui/growing-underline";
 import { Image } from "@/components/ui/image";
 import { Link } from "@/components/ui/link";
 import { SITE_METADATA } from "@/data/site-metadata";
-
-import { formatDate } from "@/shared/utils/misc";
 import { Blog } from "@/shared/types/data";
 
 export function PostCardGridView({ post }: { post: Blog }) {
-  const { path, date, title, summary, images, readingTime } = post;
+  const { path, date, title, images, readingTime } = post;
   return (
     <article>
       <div className="flex flex-col items-start justify-between gap-4 md:gap-6">
@@ -43,9 +41,9 @@ export function PostCardGridView({ post }: { post: Blog }) {
         </Link>
         <div className="w-full space-y-3">
           <div className="flex items-center gap-x-1.5 text-sm text-gray-600 dark:text-gray-400">
-            <time dateTime={date}>{formatDate(date)}</time>
+            <time dateTime={date.toString()}>{date.toString()}</time>
             <span className="mx-1 text-gray-400">/</span>
-            <span>{Math.ceil(readingTime.minutes)} mins read</span>
+            <span>{readingTime?.minutes} mins read</span>
           </div>
           <div className="group relative">
             <h3 className="text-xl font-semibold leading-6">

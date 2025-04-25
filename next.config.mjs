@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
-
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
 const nextConfig = {
-  webpack: (config) => {
+  experimental: {
+    outputFileTracingExcludes: {
+      files: [],
+      directories: ["./src/generated/prisma"],
+    },
+  },
+  webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
       use: [
@@ -24,6 +30,9 @@ const nextConfig = {
         },
       ],
     });
+    if (isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+    }
 
     return config;
   },

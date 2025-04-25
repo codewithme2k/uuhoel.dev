@@ -32,8 +32,8 @@ export interface ImageProps extends Omit<NextImageProps, "src" | "priority"> {
 }
 
 export function Image(props: ImageProps) {
-  let { alt, src, loading = "lazy", style, className, ...rest } = props;
-  let [loaded, onLoad] = useImageLoadedState(src);
+  const { alt, src, loading = "lazy", style, className, ...rest } = props;
+  const [loaded, onLoad] = useImageLoadedState(src);
 
   return (
     <div

@@ -5,47 +5,39 @@ const SPOTIFY_TOP_TRACKS_API = `https://api.spotify.com/v1/me/top/tracks`;
 const {
   SPOTIFY_CLIENT_ID: client_id,
   SPOTIFY_CLIENT_SECRET: client_secret,
-  // SPOTIFY_REFRESH_TOKEN: refresh_token = "",
+  SPOTIFY_REFRESH_TOKEN: refresh_token = "",
 } = process.env;
 
+const basic = Buffer.from(`${client_id}:${client_secret}`).toString("base64");
+
 async function getAccessToken() {
-  const response = await fetch("https://accounts.spotify.com/api/token", {
+  const response = await fetch(SPOTIFY_TOKEN_API, {
     method: "POST",
     headers: {
+      Authorization: `Basic ${basic}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-      client_id: process.env.SPOTIFY_CLIENT_ID!,
-      client_secret: process.env.SPOTIFY_CLIENT_SECRET!,
-    }),
     cache: "no-store",
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token,
+    }),
   });
 
-  if (!response.ok) {
-    console.error("❌ Failed to get access token");
-    console.error(await response.text());
-    throw new Error("Request failed");
-  }
-
-  const data = await response.json();
-  return data;
+  return response.json();
 }
 
 export async function getNowPlaying() {
   const { access_token } = await getAccessToken();
-
   const url = new URL(SPOTIFY_NOW_PLAYING_API);
   url.searchParams.append("additional_types", "track,episode");
 
-  const data = await fetch(url.toString(), {
+  return fetch(url.toString(), {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
     cache: "no-store",
   });
-  console.log(data);
-  return data;
 }
 
 export async function getTopTracks() {
