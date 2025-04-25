@@ -2,15 +2,11 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 import { fetcher } from "@/shared/utils/misc";
-import { Stats } from "@/generated/prisma";
-// Import kiểu dữ liệu từ Prisma Client
-
-// Kiểu SelectStats lấy từ Stats model trong Prisma Client
+import { Stats, StatsType } from "@/generated/prisma";
 export type SelectStats = Stats;
 
-export function useBlogStats(type: Stats, slug: string) {
-  // Sử dụng useSWR để lấy dữ liệu từ API
-  const { data, isLoading } = useSWR<SelectStats>(
+export function useBlogStats(type: StatsType, slug: string) {
+  const { data, isLoading } = useSWR<Stats>(
     `/api/stats?slug=${slug}&type=${type}`,
     fetcher,
     {
@@ -21,15 +17,16 @@ export function useBlogStats(type: Stats, slug: string) {
   );
 
   // Khởi tạo dữ liệu stats với giá trị mặc định nếu không có dữ liệu
-  const { views, loves, applauses, ideas, bullseyes } = data || {};
-  const stats: SelectStats = {
+  const { views, loves, applauses, ideas, bullseye } = data || {};
+  const stats: Stats = {
+    id: "",
+    type,
     slug,
     views: views ?? 0,
     loves: loves ?? 0,
     applauses: applauses ?? 0,
     ideas: ideas ?? 0,
-    bullseyes: bullseyes ?? 0,
-    id: "",
+    bullseye: bullseye ?? 0,
   };
 
   return [stats, isLoading] as const;

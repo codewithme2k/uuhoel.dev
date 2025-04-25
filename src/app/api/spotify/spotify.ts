@@ -32,12 +32,14 @@ export async function getNowPlaying() {
   const url = new URL(SPOTIFY_NOW_PLAYING_API);
   url.searchParams.append("additional_types", "track,episode");
 
-  return fetch(url.toString(), {
+  const data = await fetch(url.toString(), {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
     cache: "no-store",
   });
+
+  return data;
 }
 
 export async function getTopTracks() {

@@ -1287,6 +1287,7 @@ export namespace Prisma {
     images?: boolean
     authors?: boolean
     publishedAt?: boolean
+    stats?: boolean | Blog$statsArgs<ExtArgs>
   }, ExtArgs["result"]["blog"]>
 
 
@@ -1306,11 +1307,15 @@ export namespace Prisma {
   }
 
   export type BlogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "readingTime" | "slug" | "path" | "content" | "date" | "tags" | "summary" | "images" | "authors" | "publishedAt", ExtArgs["result"]["blog"]>
-  export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BlogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    stats?: boolean | Blog$statsArgs<ExtArgs>
+  }
 
   export type $BlogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Blog"
-    objects: {}
+    objects: {
+      stats: Prisma.$StatsPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
@@ -1688,6 +1693,7 @@ export namespace Prisma {
    */
   export interface Prisma__BlogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    stats<T extends Blog$statsArgs<ExtArgs> = {}>(args?: Subset<T, Blog$statsArgs<ExtArgs>>): Prisma__StatsClient<$Result.GetResult<Prisma.$StatsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2095,6 +2101,25 @@ export namespace Prisma {
      * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
      */
     options?: InputJsonValue
+  }
+
+  /**
+   * Blog.stats
+   */
+  export type Blog$statsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stats
+     */
+    select?: StatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Stats
+     */
+    omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    where?: StatsWhereInput
   }
 
   /**
@@ -3125,6 +3150,8 @@ export namespace Prisma {
     applauses: number | null
     ideas: number | null
     bullseye: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type StatsMaxAggregateOutputType = {
@@ -3136,6 +3163,8 @@ export namespace Prisma {
     applauses: number | null
     ideas: number | null
     bullseye: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type StatsCountAggregateOutputType = {
@@ -3147,6 +3176,8 @@ export namespace Prisma {
     applauses: number
     ideas: number
     bullseye: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -3176,6 +3207,8 @@ export namespace Prisma {
     applauses?: true
     ideas?: true
     bullseye?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type StatsMaxAggregateInputType = {
@@ -3187,6 +3220,8 @@ export namespace Prisma {
     applauses?: true
     ideas?: true
     bullseye?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type StatsCountAggregateInputType = {
@@ -3198,6 +3233,8 @@ export namespace Prisma {
     applauses?: true
     ideas?: true
     bullseye?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -3296,6 +3333,8 @@ export namespace Prisma {
     applauses: number
     ideas: number
     bullseye: number
+    createdAt: Date
+    updatedAt: Date
     _count: StatsCountAggregateOutputType | null
     _avg: StatsAvgAggregateOutputType | null
     _sum: StatsSumAggregateOutputType | null
@@ -3326,6 +3365,9 @@ export namespace Prisma {
     applauses?: boolean
     ideas?: boolean
     bullseye?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Blog?: boolean | Stats$BlogArgs<ExtArgs>
   }, ExtArgs["result"]["stats"]>
 
 
@@ -3339,13 +3381,20 @@ export namespace Prisma {
     applauses?: boolean
     ideas?: boolean
     bullseye?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type StatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "slug" | "views" | "loves" | "applauses" | "ideas" | "bullseye", ExtArgs["result"]["stats"]>
+  export type StatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "slug" | "views" | "loves" | "applauses" | "ideas" | "bullseye" | "createdAt" | "updatedAt", ExtArgs["result"]["stats"]>
+  export type StatsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Blog?: boolean | Stats$BlogArgs<ExtArgs>
+  }
 
   export type $StatsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Stats"
-    objects: {}
+    objects: {
+      Blog: Prisma.$BlogPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       type: $Enums.StatsType
@@ -3355,6 +3404,8 @@ export namespace Prisma {
       applauses: number
       ideas: number
       bullseye: number
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["stats"]>
     composites: {}
   }
@@ -3718,6 +3769,7 @@ export namespace Prisma {
    */
   export interface Prisma__StatsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    Blog<T extends Stats$BlogArgs<ExtArgs> = {}>(args?: Subset<T, Stats$BlogArgs<ExtArgs>>): Prisma__BlogClient<$Result.GetResult<Prisma.$BlogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3755,6 +3807,8 @@ export namespace Prisma {
     readonly applauses: FieldRef<"Stats", 'Int'>
     readonly ideas: FieldRef<"Stats", 'Int'>
     readonly bullseye: FieldRef<"Stats", 'Int'>
+    readonly createdAt: FieldRef<"Stats", 'DateTime'>
+    readonly updatedAt: FieldRef<"Stats", 'DateTime'>
   }
     
 
@@ -3771,6 +3825,10 @@ export namespace Prisma {
      * Omit specific fields from the Stats
      */
     omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
     /**
      * Filter, which Stats to fetch.
      */
@@ -3790,6 +3848,10 @@ export namespace Prisma {
      */
     omit?: StatsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    /**
      * Filter, which Stats to fetch.
      */
     where: StatsWhereUniqueInput
@@ -3807,6 +3869,10 @@ export namespace Prisma {
      * Omit specific fields from the Stats
      */
     omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
     /**
      * Filter, which Stats to fetch.
      */
@@ -3856,6 +3922,10 @@ export namespace Prisma {
      */
     omit?: StatsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    /**
      * Filter, which Stats to fetch.
      */
     where?: StatsWhereInput
@@ -3904,6 +3974,10 @@ export namespace Prisma {
      */
     omit?: StatsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    /**
      * Filter, which Stats to fetch.
      */
     where?: StatsWhereInput
@@ -3947,6 +4021,10 @@ export namespace Prisma {
      */
     omit?: StatsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    /**
      * The data needed to create a Stats.
      */
     data: XOR<StatsCreateInput, StatsUncheckedCreateInput>
@@ -3974,6 +4052,10 @@ export namespace Prisma {
      * Omit specific fields from the Stats
      */
     omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
     /**
      * The data needed to update a Stats.
      */
@@ -4015,6 +4097,10 @@ export namespace Prisma {
      */
     omit?: StatsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
+    /**
      * The filter to search for the Stats to update in case it exists.
      */
     where: StatsWhereUniqueInput
@@ -4040,6 +4126,10 @@ export namespace Prisma {
      * Omit specific fields from the Stats
      */
     omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
     /**
      * Filter which Stats to delete.
      */
@@ -4089,6 +4179,25 @@ export namespace Prisma {
   }
 
   /**
+   * Stats.Blog
+   */
+  export type Stats$BlogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Blog
+     */
+    select?: BlogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Blog
+     */
+    omit?: BlogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BlogInclude<ExtArgs> | null
+    where?: BlogWhereInput
+  }
+
+  /**
    * Stats without action
    */
   export type StatsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4100,6 +4209,10 @@ export namespace Prisma {
      * Omit specific fields from the Stats
      */
     omit?: StatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatsInclude<ExtArgs> | null
   }
 
 
@@ -4147,7 +4260,9 @@ export namespace Prisma {
     loves: 'loves',
     applauses: 'applauses',
     ideas: 'ideas',
-    bullseye: 'bullseye'
+    bullseye: 'bullseye',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type StatsScalarFieldEnum = (typeof StatsScalarFieldEnum)[keyof typeof StatsScalarFieldEnum]
@@ -4270,6 +4385,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Blog">
     authors?: StringNullableListFilter<"Blog">
     publishedAt?: DateTimeFilter<"Blog"> | Date | string
+    stats?: XOR<StatsNullableScalarRelationFilter, StatsWhereInput> | null
   }
 
   export type BlogOrderByWithRelationInput = {
@@ -4285,6 +4401,7 @@ export namespace Prisma {
     images?: SortOrder
     authors?: SortOrder
     publishedAt?: SortOrder
+    stats?: StatsOrderByWithRelationInput
   }
 
   export type BlogWhereUniqueInput = Prisma.AtLeast<{
@@ -4303,6 +4420,7 @@ export namespace Prisma {
     images?: StringNullableListFilter<"Blog">
     authors?: StringNullableListFilter<"Blog">
     publishedAt?: DateTimeFilter<"Blog"> | Date | string
+    stats?: XOR<StatsNullableScalarRelationFilter, StatsWhereInput> | null
   }, "id" | "slug">
 
   export type BlogOrderByWithAggregationInput = {
@@ -4423,6 +4541,9 @@ export namespace Prisma {
     applauses?: IntFilter<"Stats"> | number
     ideas?: IntFilter<"Stats"> | number
     bullseye?: IntFilter<"Stats"> | number
+    createdAt?: DateTimeFilter<"Stats"> | Date | string
+    updatedAt?: DateTimeFilter<"Stats"> | Date | string
+    Blog?: XOR<BlogNullableScalarRelationFilter, BlogWhereInput> | null
   }
 
   export type StatsOrderByWithRelationInput = {
@@ -4434,22 +4555,28 @@ export namespace Prisma {
     applauses?: SortOrder
     ideas?: SortOrder
     bullseye?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    Blog?: BlogOrderByWithRelationInput
   }
 
   export type StatsWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    slug?: string
     type_slug?: StatsTypeSlugCompoundUniqueInput
     AND?: StatsWhereInput | StatsWhereInput[]
     OR?: StatsWhereInput[]
     NOT?: StatsWhereInput | StatsWhereInput[]
     type?: EnumStatsTypeFilter<"Stats"> | $Enums.StatsType
-    slug?: StringFilter<"Stats"> | string
     views?: IntFilter<"Stats"> | number
     loves?: IntFilter<"Stats"> | number
     applauses?: IntFilter<"Stats"> | number
     ideas?: IntFilter<"Stats"> | number
     bullseye?: IntFilter<"Stats"> | number
-  }, "id" | "type_slug">
+    createdAt?: DateTimeFilter<"Stats"> | Date | string
+    updatedAt?: DateTimeFilter<"Stats"> | Date | string
+    Blog?: XOR<BlogNullableScalarRelationFilter, BlogWhereInput> | null
+  }, "id" | "slug" | "type_slug">
 
   export type StatsOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4460,6 +4587,8 @@ export namespace Prisma {
     applauses?: SortOrder
     ideas?: SortOrder
     bullseye?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: StatsCountOrderByAggregateInput
     _avg?: StatsAvgOrderByAggregateInput
     _max?: StatsMaxOrderByAggregateInput
@@ -4479,13 +4608,14 @@ export namespace Prisma {
     applauses?: IntWithAggregatesFilter<"Stats"> | number
     ideas?: IntWithAggregatesFilter<"Stats"> | number
     bullseye?: IntWithAggregatesFilter<"Stats"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Stats"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Stats"> | Date | string
   }
 
   export type BlogCreateInput = {
     id?: string
     title: string
     readingTime?: XOR<ReadingTimeNullableCreateEnvelopeInput, ReadingTimeCreateInput> | null
-    slug: string
     path: string
     content: string
     date: Date | string
@@ -4494,6 +4624,7 @@ export namespace Prisma {
     images?: BlogCreateimagesInput | string[]
     authors?: BlogCreateauthorsInput | string[]
     publishedAt: Date | string
+    stats?: StatsCreateNestedOneWithoutBlogInput
   }
 
   export type BlogUncheckedCreateInput = {
@@ -4514,7 +4645,6 @@ export namespace Prisma {
   export type BlogUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     readingTime?: XOR<ReadingTimeNullableUpdateEnvelopeInput, ReadingTimeCreateInput> | null
-    slug?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4523,6 +4653,7 @@ export namespace Prisma {
     images?: BlogUpdateimagesInput | string[]
     authors?: BlogUpdateauthorsInput | string[]
     publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stats?: StatsUpdateOneWithoutBlogNestedInput
   }
 
   export type BlogUncheckedUpdateInput = {
@@ -4557,7 +4688,6 @@ export namespace Prisma {
   export type BlogUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     readingTime?: XOR<ReadingTimeNullableUpdateEnvelopeInput, ReadingTimeCreateInput> | null
-    slug?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4671,6 +4801,9 @@ export namespace Prisma {
     applauses?: number
     ideas?: number
     bullseye?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Blog?: BlogCreateNestedOneWithoutStatsInput
   }
 
   export type StatsUncheckedCreateInput = {
@@ -4682,6 +4815,9 @@ export namespace Prisma {
     applauses?: number
     ideas?: number
     bullseye?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Blog?: BlogUncheckedCreateNestedOneWithoutStatsInput
   }
 
   export type StatsUpdateInput = {
@@ -4692,6 +4828,9 @@ export namespace Prisma {
     applauses?: IntFieldUpdateOperationsInput | number
     ideas?: IntFieldUpdateOperationsInput | number
     bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Blog?: BlogUpdateOneWithoutStatsNestedInput
   }
 
   export type StatsUncheckedUpdateInput = {
@@ -4702,6 +4841,9 @@ export namespace Prisma {
     applauses?: IntFieldUpdateOperationsInput | number
     ideas?: IntFieldUpdateOperationsInput | number
     bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Blog?: BlogUncheckedUpdateOneWithoutStatsNestedInput
   }
 
   export type StatsCreateManyInput = {
@@ -4713,6 +4855,8 @@ export namespace Prisma {
     applauses?: number
     ideas?: number
     bullseye?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type StatsUpdateManyMutationInput = {
@@ -4723,6 +4867,8 @@ export namespace Prisma {
     applauses?: IntFieldUpdateOperationsInput | number
     ideas?: IntFieldUpdateOperationsInput | number
     bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StatsUncheckedUpdateManyInput = {
@@ -4733,6 +4879,8 @@ export namespace Prisma {
     applauses?: IntFieldUpdateOperationsInput | number
     ideas?: IntFieldUpdateOperationsInput | number
     bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4778,6 +4926,11 @@ export namespace Prisma {
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
+  }
+
+  export type StatsNullableScalarRelationFilter = {
+    is?: StatsWhereInput | null
+    isNot?: StatsWhereInput | null
   }
 
   export type ReadingTimeOrderByInput = {
@@ -4917,6 +5070,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type BlogNullableScalarRelationFilter = {
+    is?: BlogWhereInput | null
+    isNot?: BlogWhereInput | null
+  }
+
   export type StatsTypeSlugCompoundUniqueInput = {
     type: $Enums.StatsType
     slug: string
@@ -4931,6 +5089,8 @@ export namespace Prisma {
     applauses?: SortOrder
     ideas?: SortOrder
     bullseye?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StatsAvgOrderByAggregateInput = {
@@ -4950,6 +5110,8 @@ export namespace Prisma {
     applauses?: SortOrder
     ideas?: SortOrder
     bullseye?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StatsMinOrderByAggregateInput = {
@@ -4961,6 +5123,8 @@ export namespace Prisma {
     applauses?: SortOrder
     ideas?: SortOrder
     bullseye?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StatsSumOrderByAggregateInput = {
@@ -5017,6 +5181,12 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type StatsCreateNestedOneWithoutBlogInput = {
+    create?: XOR<StatsCreateWithoutBlogInput, StatsUncheckedCreateWithoutBlogInput>
+    connectOrCreate?: StatsCreateOrConnectWithoutBlogInput
+    connect?: StatsWhereUniqueInput
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -5046,6 +5216,16 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type StatsUpdateOneWithoutBlogNestedInput = {
+    create?: XOR<StatsCreateWithoutBlogInput, StatsUncheckedCreateWithoutBlogInput>
+    connectOrCreate?: StatsCreateOrConnectWithoutBlogInput
+    upsert?: StatsUpsertWithoutBlogInput
+    disconnect?: boolean
+    delete?: StatsWhereInput | boolean
+    connect?: StatsWhereUniqueInput
+    update?: XOR<XOR<StatsUpdateToOneWithWhereWithoutBlogInput, StatsUpdateWithoutBlogInput>, StatsUncheckedUpdateWithoutBlogInput>
+  }
+
   export type SnippetCreatetagsInput = {
     set: string[]
   }
@@ -5059,6 +5239,18 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type BlogCreateNestedOneWithoutStatsInput = {
+    create?: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutStatsInput
+    connect?: BlogWhereUniqueInput
+  }
+
+  export type BlogUncheckedCreateNestedOneWithoutStatsInput = {
+    create?: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutStatsInput
+    connect?: BlogWhereUniqueInput
+  }
+
   export type EnumStatsTypeFieldUpdateOperationsInput = {
     set?: $Enums.StatsType
   }
@@ -5069,6 +5261,26 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BlogUpdateOneWithoutStatsNestedInput = {
+    create?: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutStatsInput
+    upsert?: BlogUpsertWithoutStatsInput
+    disconnect?: BlogWhereInput | boolean
+    delete?: BlogWhereInput | boolean
+    connect?: BlogWhereUniqueInput
+    update?: XOR<XOR<BlogUpdateToOneWithWhereWithoutStatsInput, BlogUpdateWithoutStatsInput>, BlogUncheckedUpdateWithoutStatsInput>
+  }
+
+  export type BlogUncheckedUpdateOneWithoutStatsNestedInput = {
+    create?: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+    connectOrCreate?: BlogCreateOrConnectWithoutStatsInput
+    upsert?: BlogUpsertWithoutStatsInput
+    disconnect?: BlogWhereInput | boolean
+    delete?: BlogWhereInput | boolean
+    connect?: BlogWhereUniqueInput
+    update?: XOR<XOR<BlogUpdateToOneWithWhereWithoutStatsInput, BlogUpdateWithoutStatsInput>, BlogUncheckedUpdateWithoutStatsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5202,9 +5414,145 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type StatsCreateWithoutBlogInput = {
+    id?: string
+    type?: $Enums.StatsType
+    slug: string
+    views?: number
+    loves?: number
+    applauses?: number
+    ideas?: number
+    bullseye?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StatsUncheckedCreateWithoutBlogInput = {
+    id?: string
+    type?: $Enums.StatsType
+    slug: string
+    views?: number
+    loves?: number
+    applauses?: number
+    ideas?: number
+    bullseye?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type StatsCreateOrConnectWithoutBlogInput = {
+    where: StatsWhereUniqueInput
+    create: XOR<StatsCreateWithoutBlogInput, StatsUncheckedCreateWithoutBlogInput>
+  }
+
   export type ReadingTimeUpsertInput = {
     set: ReadingTimeCreateInput | null
     update: ReadingTimeUpdateInput
+  }
+
+  export type StatsUpsertWithoutBlogInput = {
+    update: XOR<StatsUpdateWithoutBlogInput, StatsUncheckedUpdateWithoutBlogInput>
+    create: XOR<StatsCreateWithoutBlogInput, StatsUncheckedCreateWithoutBlogInput>
+    where?: StatsWhereInput
+  }
+
+  export type StatsUpdateToOneWithWhereWithoutBlogInput = {
+    where?: StatsWhereInput
+    data: XOR<StatsUpdateWithoutBlogInput, StatsUncheckedUpdateWithoutBlogInput>
+  }
+
+  export type StatsUpdateWithoutBlogInput = {
+    type?: EnumStatsTypeFieldUpdateOperationsInput | $Enums.StatsType
+    slug?: StringFieldUpdateOperationsInput | string
+    views?: IntFieldUpdateOperationsInput | number
+    loves?: IntFieldUpdateOperationsInput | number
+    applauses?: IntFieldUpdateOperationsInput | number
+    ideas?: IntFieldUpdateOperationsInput | number
+    bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StatsUncheckedUpdateWithoutBlogInput = {
+    type?: EnumStatsTypeFieldUpdateOperationsInput | $Enums.StatsType
+    slug?: StringFieldUpdateOperationsInput | string
+    views?: IntFieldUpdateOperationsInput | number
+    loves?: IntFieldUpdateOperationsInput | number
+    applauses?: IntFieldUpdateOperationsInput | number
+    ideas?: IntFieldUpdateOperationsInput | number
+    bullseye?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BlogCreateWithoutStatsInput = {
+    id?: string
+    title: string
+    readingTime?: XOR<ReadingTimeNullableCreateEnvelopeInput, ReadingTimeCreateInput> | null
+    path: string
+    content: string
+    date: Date | string
+    tags?: BlogCreatetagsInput | string[]
+    summary: string
+    images?: BlogCreateimagesInput | string[]
+    authors?: BlogCreateauthorsInput | string[]
+    publishedAt: Date | string
+  }
+
+  export type BlogUncheckedCreateWithoutStatsInput = {
+    id?: string
+    title: string
+    readingTime?: XOR<ReadingTimeNullableCreateEnvelopeInput, ReadingTimeCreateInput> | null
+    path: string
+    content: string
+    date: Date | string
+    tags?: BlogCreatetagsInput | string[]
+    summary: string
+    images?: BlogCreateimagesInput | string[]
+    authors?: BlogCreateauthorsInput | string[]
+    publishedAt: Date | string
+  }
+
+  export type BlogCreateOrConnectWithoutStatsInput = {
+    where: BlogWhereUniqueInput
+    create: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+  }
+
+  export type BlogUpsertWithoutStatsInput = {
+    update: XOR<BlogUpdateWithoutStatsInput, BlogUncheckedUpdateWithoutStatsInput>
+    create: XOR<BlogCreateWithoutStatsInput, BlogUncheckedCreateWithoutStatsInput>
+    where?: BlogWhereInput
+  }
+
+  export type BlogUpdateToOneWithWhereWithoutStatsInput = {
+    where?: BlogWhereInput
+    data: XOR<BlogUpdateWithoutStatsInput, BlogUncheckedUpdateWithoutStatsInput>
+  }
+
+  export type BlogUpdateWithoutStatsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    readingTime?: XOR<ReadingTimeNullableUpdateEnvelopeInput, ReadingTimeCreateInput> | null
+    path?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: BlogUpdatetagsInput | string[]
+    summary?: StringFieldUpdateOperationsInput | string
+    images?: BlogUpdateimagesInput | string[]
+    authors?: BlogUpdateauthorsInput | string[]
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BlogUncheckedUpdateWithoutStatsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    readingTime?: XOR<ReadingTimeNullableUpdateEnvelopeInput, ReadingTimeCreateInput> | null
+    path?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: BlogUpdatetagsInput | string[]
+    summary?: StringFieldUpdateOperationsInput | string
+    images?: BlogUpdateimagesInput | string[]
+    authors?: BlogUpdateauthorsInput | string[]
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ReadingTimeUpdateInput = {

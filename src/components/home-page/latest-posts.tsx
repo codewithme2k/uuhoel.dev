@@ -6,13 +6,14 @@ import { PostCardListView } from "@/components/blog/post-card-list-view";
 import { SnippetCard } from "@/components/cards/snippet";
 import { GrowingUnderline } from "@/components/ui/growing-underline";
 import { Link } from "@/components/ui/link";
-import { BlogFrontmatter, Snippet } from "@/shared/types/data";
+import { Snippet } from "@/shared/types/data";
+import { Blog } from "@/generated/prisma";
 
 export function LatestPosts({
   posts,
   snippets,
 }: {
-  posts: BlogFrontmatter[];
+  posts: Blog[];
   snippets: Snippet[];
 }) {
   const [view, setView] = useState<"posts" | "snippets">("posts");

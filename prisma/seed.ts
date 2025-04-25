@@ -34,13 +34,26 @@ function getRandomTitle() {
   return `${start} ${end}`;
 }
 
+// Helper function to generate slugs and paths
+function generateSlugAndPath(title: string, index: number) {
+  const slug =
+    title
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w-]+/g, "") + `-${index + 1}`;
+  const path = `/blog/${slug}`;
+  return { slug, path };
+}
+
 async function main() {
   const posts = Array.from({ length: 20 }).map((_, i) => {
     const title = getRandomTitle();
+    const { slug, path } = generateSlugAndPath(title, i);
+
     return {
       title,
-      slug: title.toLowerCase().replace(/\s+/g, "-") + `-${i + 1}`,
-      path: `/blog/${title.toLowerCase().replace(/\s+/g, "-")}-${i + 1}`,
+      slug,
+      path,
       content: `## Introduction\n\nThis blog post is about: **${title}**.\n\nWe’ll dive deep into how you can improve your frontend game.\n\nHappy coding 🍻.`,
       date: new Date(`2022-10-${(i % 28) + 1}`),
       publishedAt: new Date(`2022-10-${(i % 28) + 1}`),
@@ -56,8 +69,29 @@ async function main() {
     };
   });
 
+  // Insert blog posts and stats into the database
   for (const post of posts) {
-    await db.blog.create({ data: post });
+    try {
+      // Insert the blog post
+      const createdPost = await db.blog.create({ data: post });
+
+      // Insert related stats for the blog post
+      await db.stats.create({
+        data: {
+          type: "blog",
+          slug: createdPost.slug,
+          views: Math.floor(Math.random() * 1000),
+          loves: Math.floor(Math.random() * 500),
+          applauses: Math.floor(Math.random() * 200),
+          ideas: Math.floor(Math.random() * 300),
+          bullseye: Math.floor(Math.random() * 100),
+        },
+      });
+
+      console.log(`Stats created for ${createdPost.title}`);
+    } catch (error) {
+      console.error("Error inserting post:", post.title, error);
+    }
   }
 
   console.log("✅ 20 blog posts with random titles inserted");

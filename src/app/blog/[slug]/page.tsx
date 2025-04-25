@@ -16,6 +16,9 @@ export default async function BlogSlugPage({
 }) {
   const allPosts = await db.blog.findMany({
     orderBy: { publishedAt: "desc" },
+    include: {
+      stats: true,
+    },
   });
 
   const currentIndex = allPosts.findIndex((p) => p.slug === params.slug);
@@ -25,21 +28,8 @@ export default async function BlogSlugPage({
   }
 
   const currentPost = allPosts[currentIndex];
-  const next = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const next = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
   const prev =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-
-  // Optional: Fetch author details if needed
-  // const authorDetails = await db.user.findMany({
-  //   where: { id: { in: currentPost.authors } },
-  // });
-
-  return (
-    <PostLayout
-      content={currentPost}
-      authorDetails={[]}
-      next={next}
-      prev={prev}
-    />
-  );
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined;
+  return <PostLayout content={currentPost} next={next} prev={prev} />;
 }

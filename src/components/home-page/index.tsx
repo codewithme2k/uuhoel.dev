@@ -41,11 +41,6 @@ export function Home({ posts, snippets }: { posts: any; snippets: any }) {
         </div>
       </div>
       <LatestPosts posts={posts} snippets={snippets} />
-      {/* {SITE_METADATA.newsletter?.provider && (
-        <div className="flex items-center justify-center py-4 lg:py-10">
-          <NewsletterForm />
-        </div>
-      )} */}
     </Container>
   );
 }

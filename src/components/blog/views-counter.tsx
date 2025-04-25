@@ -24,6 +24,7 @@ export function ViewsCounter({
     if (!isLoading && stats) {
       updateView({ type, slug, views: stats["views"] + 1 });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stats, isLoading]);
 
   return (

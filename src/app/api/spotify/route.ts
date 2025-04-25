@@ -8,6 +8,7 @@ export async function GET() {
   }
 
   const data = await response.json();
+
   if (data?.currently_playing_type === "episode") {
     return Response.json({
       isPlaying: true,

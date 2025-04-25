@@ -1,5 +1,4 @@
-import { clsx } from "clsx";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { ReactNode } from "react";
 import { Banner } from "@/components/blog/banner";
 import { BlogMeta } from "@/components/blog/blog-meta";
@@ -18,18 +17,8 @@ interface LayoutProps {
 }
 
 export function PostBanner({ content, children }: LayoutProps) {
-  const {
-    slug,
-    type,
-    title,
-    images,
-    date,
-    lastmod,
-    readingTime,
-    tags,
-    filePath,
-  } = content;
-  let postUrl = `${SITE_METADATA.siteUrl}/${type.toLowerCase()}/${slug}`;
+  const { slug, type, images, date, readingTime, tags } = content;
+  const postUrl = `${SITE_METADATA.siteUrl}/${type.toLowerCase()}/${slug}`;
 
   return (
     <Container className="pt-4 lg:pt-12">
@@ -42,7 +31,7 @@ export function PostBanner({ content, children }: LayoutProps) {
               <dt className="sr-only">Published on</dt>
               <BlogMeta
                 date={date}
-                lastmod={lastmod}
+                lastmod={""}
                 type={type.toLowerCase() as Stats}
                 slug={slug}
                 readingTime={readingTime}
@@ -62,13 +51,13 @@ export function PostBanner({ content, children }: LayoutProps) {
         <div className="space-y-8 border-t border-gray-200 pt-4 dark:border-gray-700">
           <div className="flex justify-between gap-4">
             <div className="flex items-center gap-2">
-              <DiscussOnX postUrl={postUrl} />
+              {/* <DiscussOnX postUrl={postUrl} /> */}
               <span className="text-gray-500">/</span>
-              <EditOnGithub filePath={filePath} />
+              {/* <EditOnGithub filePath={filePath} /> */}
             </div>
             {/* <SocialShare postUrl={postUrl} title={title} /> */}
           </div>
-          <Comments />
+          {/* <Comments /> */}
         </div>
       </article>
     </Container>

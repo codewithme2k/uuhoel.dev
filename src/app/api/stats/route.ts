@@ -87,9 +87,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const data: Stats = await request.json();
-
     const { slug, type, ...updates } = data;
-
     if (!slug || !type) {
       return Response.json(
         { message: "Missing `type` or `slug` parameter!" },

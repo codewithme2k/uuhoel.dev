@@ -144,7 +144,9 @@ exports.Prisma.StatsScalarFieldEnum = {
   loves: 'loves',
   applauses: 'applauses',
   ideas: 'ideas',
-  bullseye: 'bullseye'
+  bullseye: 'bullseye',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {

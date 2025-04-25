@@ -9,7 +9,11 @@
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
+    "@giscus/react": "^3.1.0",
     "@headlessui/react": "^2.2.2",
     "@octokit/graphql": "^8.2.2",
     "@prisma/client": "^6.6.0",
@@ -28,6 +32,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-medium-image-zoom": "^5.2.14",
+    "react-share": "^5.2.2",
     "swr": "^2.3.3",
     "typed.js": "^2.1.0"
   },
@@ -41,6 +46,7 @@
     "postcss": "^8",
     "prisma": "^6.6.0",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.3",
     "typescript": "^5"
   }
 }
